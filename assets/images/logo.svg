@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 120" width="100%" height="100%">
+  <defs>
+    <!-- Gold Metallic Gradients -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2A3" />
+      <stop offset="30%" stop-color="#D4AF37" />
+      <stop offset="70%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#F3CE5A" />
+    </linearGradient>
+    
+    <linearGradient id="goldLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#F5D77F" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+
+    <!-- Crimson Maroon Gradients -->
+    <linearGradient id="maroonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9E1B24" />
+      <stop offset="50%" stop-color="#80141D" />
+      <stop offset="100%" stop-color="#4A080D" />
+    </linearGradient>
+
+    <radialGradient id="maroonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B3202B" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#4A080D" stop-opacity="1" />
+    </radialGradient>
+
+    <!-- Shadow filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Crest Icon Graphic -->
+  <g transform="translate(10, 10)">
+    <!-- Outer Shield / Circle Glow -->
+    <circle cx="50" cy="50" r="48" fill="url(#maroonGlow)" stroke="url(#goldGrad)" stroke-width="3" />
+    <circle cx="50" cy="50" r="43" fill="none" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+
+    <!-- Candlestick chart & Arrow -->
+    <!-- Bearish/Bullish Bars -->
+    <rect x="26" y="44" width="6" height="22" rx="1.5" fill="url(#goldGrad)" />
+    <line x1="29" y1="36" x2="29" y2="72" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" />
+
+    <rect x="37" y="32" width="6" height="34" rx="1.5" fill="#FFFFFF" opacity="0.95" />
+    <line x1="40" y1="24" x2="40" y2="76" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+
+    <rect x="48" y="24" width="6" height="42" rx="1.5" fill="url(#goldGrad)" />
+    <line x1="51" y1="18" x2="51" y2="74" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" />
+
+    <rect x="59" y="38" width="6" height="28" rx="1.5" fill="#F5D77F" />
+    <line x1="62" y1="30" x2="62" y2="72" stroke="#F5D77F" stroke-width="2" stroke-linecap="round" />
+
+    <rect x="70" y="20" width="6" height="46" rx="1.5" fill="url(#goldGrad)" />
+    <line x1="73" y1="14" x2="73" y2="74" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Upward Trend Line with Arrow -->
+    <path d="M 22 66 L 36 50 L 48 56 L 62 36 L 78 18" fill="none" stroke="url(#goldLight)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#goldGlow)" />
+    <polygon points="74,15 82,16 80,24" fill="url(#goldLight)" />
+
+    <!-- Small Star / Laurel accents -->
+    <polygon points="50,6 52,11 57,11 53,14 55,19 50,16 45,19 47,14 43,11 48,11" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(125, 0)">
+    <!-- DIGITRADE text -->
+    <text x="0" y="58" font-family="'Outfit', 'Montserrat', 'Inter', sans-serif" font-size="44" font-weight="900" letter-spacing="2.5" fill="url(#goldGrad)" filter="url(#goldGlow)">DIGI<tspan fill="#FFFFFF">TRADE</tspan></text>
+    
+    <!-- ACADEMY text -->
+    <text x="3" y="86" font-family="'Outfit', 'Montserrat', 'Inter', sans-serif" font-size="20" font-weight="700" letter-spacing="9" fill="#F2CA52">ACADEMY</text>
+    
+    <!-- Tagline: LEARN • TRADE • EARN -->
+    <rect x="0" y="96" width="370" height="1.5" fill="url(#goldGrad)" opacity="0.6"/>
+    <text x="3" y="112" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="4.5" fill="#E0D2B4">LEARN <tspan fill="#D4AF37">•</tspan> TRADE <tspan fill="#D4AF37">•</tspan> EARN</text>
+  </g>
+</svg>
