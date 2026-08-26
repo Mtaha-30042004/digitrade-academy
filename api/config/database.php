@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 /**
  * DigiTrade Academy - Database Configuration & PDO Handler
- * Configured for Railway Live Production & Localhost
  */
 
 ini_set('display_errors', '0');
@@ -12,9 +11,6 @@ error_reporting(E_ALL);
 class Database {
     private static ?PDO $conn = null;
 
-    /**
-     * Get Singleton PDO Connection
-     */
     public static function getConnection(): ?PDO {
         if (self::$conn === null) {
             $isLocal = in_array($_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1'], true);
@@ -26,12 +22,18 @@ class Database {
                 $pass = '';
                 $port = '3306';
             } else {
-                // Railway Direct Credentials
+                $host = getenv('DB_HOST') ?: getenv('MYSQLHOST') ?: 'mysql.railway.internal';
+                $db   = getenv('DB_NAME') ?: getenv('MYSQLDATABASE') ?: 'railway';
+                $user = getenv('DB_USER') ?: getenv('MYSQLUSER') ?: 'root';
+                $pass = getenv('DB_PASS') ?: getenv('MYSQLPASSWORD') ?: '';
+                $port = (string)(getenv('DB_PORT') ?: getenv('MYSQLPORT') ?: '3306');
+            }
+
+            if (strpos($host, '${{') !== false) {
                 $host = 'mysql.railway.internal';
-                $db   = 'railway';
-                $user = 'root';
-                $pass = 'bVeXdjJsISFeAQluwzOAzrHrPLJZpkNdJ';
-                $port = '3306';
+            }
+            if (strpos($pass, '${{') !== false) {
+                $pass = '';
             }
 
             $charset = 'utf8mb4';
