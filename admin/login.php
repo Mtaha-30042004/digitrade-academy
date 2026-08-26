@@ -384,7 +384,7 @@ if (isset($_GET['logged_out'])) {
           <label class="form-label" for="username">Admin Username</label>
           <div class="input-wrapper">
             <i class="fas fa-user-shield icon-lead"></i>
-            <input type="text" id="username" name="username" class="form-input" placeholder="e.g. admin" value="admin" required autocomplete="username">
+            <input type="text" id="username" name="username" class="form-input" placeholder="e.g. admin" required autocomplete="username">
           </div>
         </div>
 
@@ -392,7 +392,7 @@ if (isset($_GET['logged_out'])) {
           <label class="form-label" for="password">Password</label>
           <div class="input-wrapper">
             <i class="fas fa-key icon-lead"></i>
-            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••••••" value="Admin@DigiTrade2026" required autocomplete="current-password">
+            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••••••"  required autocomplete="current-password">
             <button type="button" class="toggle-pass" id="togglePassBtn" aria-label="Toggle Password Visibility">
               <i class="fas fa-eye" id="eyeIcon"></i>
             </button>
@@ -405,11 +405,6 @@ if (isset($_GET['logged_out'])) {
         </button>
       </form>
 
-      <!-- Default Credentials Helper -->
-      <div class="credentials-hint">
-        <i class="fas fa-circle-info" style="color:var(--gold-primary);"></i> <strong>Master Login Credentials:</strong><br>
-        Username: <code style="color:#F2CA52;">admin</code> | Password: <code style="color:#F2CA52;">Admin@DigiTrade2026</code>
-      </div>
     </div>
 
     <!-- Back Link -->
