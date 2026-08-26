@@ -53,35 +53,62 @@ $userAgent = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255);
 $pdo = Database::getConnection();
 
 if (!$pdo) {
-    // Database is not connected yet, but we allow form submission to succeed for frontend WhatsApp flow
-    sendResponse(true, 'Application received (Database offline - please configure MySQL schema).', [
-        'lead_id'       => null,
-        'mentor_name'   => $mentorName,
-        'mentor_number' => $mentorNumber
-    ]);
+    sendResponse(false, 'Database connection failed. Please check MySQL settings.', null, 500);
+    exit();
 }
 
 try {
-    $sql = "INSERT INTO `admissions` 
-            (`full_name`, `whatsapp`, `email`, `city`, `course`, `experience_level`, `mentor_choice`, `mentor_number`, `message`, `status`, `ip_address`, `user_agent`, `created_at`) 
-            VALUES 
-            (:full_name, :whatsapp, :email, :city, :course, :experience_level, :mentor_choice, :mentor_number, :message, 'pending', :ip_address, :user_agent, NOW())";
-    
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        ':full_name'        => $fullName,
-        ':whatsapp'         => $whatsappNumber,
-        ':email'            => $email,
-        ':city'             => $city,
-        ':course'           => $selectedCourse,
-        ':experience_level' => $experienceLevel,
-        ':mentor_choice'    => $mentorName,
-        ':mentor_number'    => $mentorNumber,
-        ':message'          => $userMessage,
-        ':ip_address'       => $ipAddress,
-        ':user_agent'       => $userAgent
-    ]);
+    // 1. Get actual existing columns in admissions table
+    $colStmt = $pdo->query("SHOW COLUMNS FROM `admissions`");
+    $existingCols = $colStmt->fetchAll(PDO::FETCH_COLUMN) ?: [];
 
+    // 2. Map available data to existing columns
+    $dataToInsert = [];
+    
+    if (in_array('full_name', $existingCols, true)) $dataToInsert['full_name'] = $fullName;
+    if (in_array('student_name', $existingCols, true)) $dataToInsert['student_name'] = $fullName;
+    if (in_array('name', $existingCols, true)) $dataToInsert['name'] = $fullName;
+    
+    if (in_array('whatsapp', $existingCols, true)) $dataToInsert['whatsapp'] = $whatsappNumber;
+    if (in_array('phone', $existingCols, true)) $dataToInsert['phone'] = $whatsappNumber;
+    
+    if (in_array('email', $existingCols, true)) $dataToInsert['email'] = $email;
+    if (in_array('city', $existingCols, true)) $dataToInsert['city'] = $city;
+    
+    if (in_array('course', $existingCols, true)) $dataToInsert['course'] = $selectedCourse;
+    if (in_array('course_name', $existingCols, true)) $dataToInsert['course_name'] = $selectedCourse;
+    
+    if (in_array('experience_level', $existingCols, true)) $dataToInsert['experience_level'] = $experienceLevel;
+    if (in_array('experience', $existingCols, true)) $dataToInsert['experience'] = $experienceLevel;
+    
+    if (in_array('mentor_choice', $existingCols, true)) $dataToInsert['mentor_choice'] = $mentorName;
+    if (in_array('assigned_mentor', $existingCols, true)) $dataToInsert['assigned_mentor'] = $mentorName;
+    if (in_array('mentor', $existingCols, true)) $dataToInsert['mentor'] = $mentorName;
+    if (in_array('mentor_number', $existingCols, true)) $dataToInsert['mentor_number'] = $mentorNumber;
+    
+    if (in_array('message', $existingCols, true)) $dataToInsert['message'] = $userMessage;
+    if (in_array('notes', $existingCols, true)) $dataToInsert['notes'] = $userMessage;
+    
+    if (in_array('status', $existingCols, true)) $dataToInsert['status'] = 'pending';
+    if (in_array('ip_address', $existingCols, true)) $dataToInsert['ip_address'] = $ipAddress;
+    if (in_array('user_agent', $existingCols, true)) $dataToInsert['user_agent'] = $userAgent;
+
+    if (empty($dataToInsert)) {
+        sendResponse(false, 'No valid table columns matched in admissions table.', null, 500);
+    }
+
+    $colNames = '`' . implode('`, `', array_keys($dataToInsert)) . '`';
+    $placeholders = ':' . implode(', :', array_keys($dataToInsert));
+
+    $sql = "INSERT INTO `admissions` ({$colNames}) VALUES ({$placeholders})";
+    $stmt = $pdo->prepare($sql);
+    
+    $params = [];
+    foreach ($dataToInsert as $k => $v) {
+        $params[':' . $k] = $v;
+    }
+
+    $stmt->execute($params);
     $leadId = (int)$pdo->lastInsertId();
 
     sendResponse(true, 'Admission application recorded successfully!', [
