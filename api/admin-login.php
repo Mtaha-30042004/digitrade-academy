@@ -28,7 +28,7 @@ $pdo = Database::getConnection();
 
 // Default master credentials fallback if DB is not yet imported
 $defaultUser = 'admin';
-$defaultPass = 'Admin@DigiTrade2026';
+$defaultPass = 'Taha@30042004';
 
 if ($pdo) {
     try {
