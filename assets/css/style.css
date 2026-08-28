@@ -1746,13 +1746,114 @@ textarea.form-control {
     font-size: 2rem;
   }
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
   .stats-grid {
     grid-template-columns: 1fr;
   }
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Fix hero description text overflow */
+  .hero-description {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  /* Fix live hub metrics grid - stack on very small screens */
+  .hero-metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Fix metric cards text overflow */
+  .metric-box {
+    padding: 10px;
+    min-width: 0;
+  }
+
+  .metric-label {
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .metric-val {
+    font-size: 1.15rem;
+  }
+
+  .metric-tag {
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+
+  .metric-sub {
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Fix hero card main padding */
+  .hero-card-main {
+    padding: 18px 14px;
+  }
+
+  /* Fix "Explore Courses" button text */
+  .hero-card-main .btn {
+    font-size: 0.8rem;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+
+  /* Fix hero actions buttons */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .hero-actions .btn {
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Fix floating badges overflow */
+  .floating-badge {
+    display: none;
+  }
+
+  /* Fix dual whatsapp grid on mobile */
+  .dual-whatsapp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Fix mentor radio select on mobile */
+  .whatsapp-mentor-select {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero visual overflow fix */
+  .hero-visual {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Extra small phones */
+  .hero-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 1.65rem;
+  }
+
+  .terminal-title {
+    font-size: 0.72rem;
   }
 }
 
@@ -2065,4 +2166,3 @@ textarea.form-control {
   color: var(--gold-light) !important;
   font-weight: 700;
 }
-
