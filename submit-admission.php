@@ -39,8 +39,13 @@ if (empty($selectedCourse)) {
 }
 
 // Mentor resolution
-$mentorName = 'Muhammad Safiullah (Forex & Trading)';
-$mentorNumber = '923327292282';
+$mentorName = 'Muhammad Taha (Digital Marketing & Marketplace)';
+$mentorNumber = '923405201175';
+
+if ($mentorChoice === 'mentor2' || stripos($mentorChoice, 'Safiullah') !== false || stripos($selectedCourse, 'Forex') !== false) {
+    $mentorName = 'Muhammad Safiullah (Forex & Trading)';
+    $mentorNumber = '923327292282';
+}
 
 if ($mentorChoice === 'mentor2' || stripos($mentorChoice, 'Safiullah') !== false || stripos($mentorChoice, 'Trading') !== false) {
     $mentorName = 'Muhammad Safiullah (Forex & Trading)';

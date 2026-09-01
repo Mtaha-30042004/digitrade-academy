@@ -1,14 +1,20 @@
 ﻿/**
  * DIGITRADE ACADEMY - MAIN JAVASCRIPT
- * Features: Multi-Page Navigation, Official WhatsApp Dispatcher (+92 332 7292282),
+ * Features: Multi-Page Navigation, Dual WhatsApp Admission Dispatcher (+92 340 5201175 & +92 332 7292282),
  * Animated Counters, FAQ Accordions, Course URL Auto-Selection, and Floating WhatsApp.
  */
 
 // ==========================================
-// CONFIGURATION (Official Academy Mentor)
+// CONFIGURATION (Official Academy Mentors)
 // ==========================================
 const ACADEMY_CONFIG = {
-  mentor: {
+  mentor1: {
+    name: 'Muhammad Taha',
+    role: 'Digital Marketing & Marketplace Mentor',
+    number: '923405201175',
+    display: '+92 340 5201175'
+  },
+  mentor2: {
     name: 'Muhammad Safiullah',
     role: 'Forex & Trading Mentor',
     number: '923327292282',
@@ -206,11 +212,22 @@ function checkUrlParamsForCourse() {
 }
 
 /* --------------------------------------------------
-   5. ADMISSION FORM & DIRECT WHATSAPP + DB DISPATCHER
+   5. ADMISSION FORM & DUAL WHATSAPP + DB DISPATCHER
    -------------------------------------------------- */
 function initAdmissionForm() {
   const form = document.getElementById('admissionForm');
   if (!form) return;
+
+  // Radio button visual feedback
+  const mentorRadios = form.querySelectorAll('input[name="mentorChoice"]');
+  mentorRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.querySelectorAll('.mentor-radio-label').forEach(lbl => lbl.classList.remove('selected'));
+      if (radio.checked) {
+        radio.closest('.mentor-radio-label').classList.add('selected');
+      }
+    });
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -223,7 +240,18 @@ function initAdmissionForm() {
     const experienceLevel = document.getElementById('experienceLevel') ? document.getElementById('experienceLevel').value : 'Beginner';
     const message = document.getElementById('userMessage') ? document.getElementById('userMessage').value.trim() : '';
 
-    const mentorObj = ACADEMY_CONFIG.mentor;
+    // Check selected WhatsApp mentor line or course-based default
+    const selectedMentor = form.querySelector('input[name="mentorChoice"]:checked');
+    let isMentor2 = selectedMentor && selectedMentor.value === 'mentor2';
+    
+    // Auto route Forex to Safiullah, Meta Ads/Marketplace to Taha if no radio selected
+    if (!selectedMentor) {
+      if (selectedCourse.includes('Forex')) {
+        isMentor2 = true;
+      }
+    }
+
+    const mentorObj = isMentor2 ? ACADEMY_CONFIG.mentor2 : ACADEMY_CONFIG.mentor1;
     const mentorNumber = mentorObj.number;
 
     if (!fullName || !whatsappNum || !selectedCourse) {
@@ -307,8 +335,8 @@ function initFloatingWhatsApp() {
 
   floatBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const greeting = encodeURIComponent(`Hello DigiTrade Academy! I want to inquire about upcoming Forex Trading & Meta Ads courses with Muhammad Safiullah.`);
-    window.open(`https://wa.me/${ACADEMY_CONFIG.mentor.number}?text=${greeting}`, '_blank');
+    const greeting = encodeURIComponent(`Hello DigiTrade Academy! I want to inquire about upcoming courses and mentorship with Muhammad Taha & Muhammad Safiullah.`);
+    window.open(`https://wa.me/${ACADEMY_CONFIG.mentor1.number}?text=${greeting}`, '_blank');
   });
 }
 
